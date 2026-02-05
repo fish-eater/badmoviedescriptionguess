@@ -1,17 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>guess a movie off it's plot explained badly</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header>
-    <span>guess a movie off it's plot explained badly</span>
-    <span class="creator">by <a href="https://fish-eater.github.io" target="_blank">fish-eater</a></span>
+    <div class="header-left">
+      <img src="favicon.png" alt="favicon" class="header-favicon">
+      <span class="header-title">guess a movie off it's plot explained badly</span>
+    </div>
+    <div class="header-center">
+      <span class="creator">made for <a href="https://www.tiktok.com/@jarrett_warlick" class="header-link"
+          target="_blank">Jarrett Warlick's Tiktok</a></span>
+      <button class="info-btn" id="infoBtn" aria-label="Information">about</button>
+    </div>
+    <div class="info-popup" id="infoPopup">
+      <div class="info-popup-content">
+        <button class="info-close" id="closePopup">&times;</button>
+        <h3>about this game</h3>
+        <p>this website was created for Jarrett Warlick's content. It was his idea, and he requested it
+          be made.</p>
+        <p><strong>Source Code:</strong> <a href="https://github.com/fish-eater/badmoviedescriptionguess">github</a></p>
+        <p>any questions or if you want me to make you something:</p>
+        <p><strong>Contact:</strong> <a href="mailto:wyattekarnes@gmail.com">wyattekarnes@gmail.com</a></p>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="creator">by <a href="https://fish-eater.github.io" target="_blank">fish-eater</a></span>
+      <button class="donate-btn" onclick="window.open('https://buymeacoffee.com/wyattkarnes', '_blank')">Donate</button>
+    </div>
   </header>
-<!--- <div class="ad ad-left">advertisement</div> -->
   <main>
     <div class="container">
       <div id="story" class="story">
@@ -19,7 +43,7 @@
       </div>
     </div>
   </main>
-<!---  <div class="ad ad-right">advertisement</div> -->
   <script src="script.js"></script>
 </body>
+
 </html>
