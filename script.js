@@ -320,34 +320,31 @@ document.addEventListener('keydown', (e) => {
 });
 
 
-// typing "JARRETT" disables the background
-let keySequence = '';
+// clicking the favicon 5 times disables the background (easter egg)
+let clickCount = 0;
 let backgroundEnabled = true;
 
-document.addEventListener('keydown', (e) => {
-  keySequence += e.key.toUpperCase();
+const headerFavicon = document.querySelector('.header-favicon');
 
-  // keep only the last 7 characters
-  if (keySequence.length > 7) {
-    keySequence = keySequence.slice(-7);
-  }
+headerFavicon.addEventListener('click', (e) => {
+  e.preventDefault();
+  clickCount++;
+  console.log(`Favicon clicked! Count: ${clickCount}`);
 
-  if (keySequence === 'JARRETT') {
+  // toggle background on 5th click
+  if (clickCount === 5) {
     backgroundEnabled = !backgroundEnabled;
-    const bgElement = document.querySelector('body::before');
+    const container = document.querySelector('.container');
 
     if (backgroundEnabled) {
-      document.body.style.setProperty('--bg-display', 'block');
-      document.body.classList.remove('no-background');
+      container.classList.remove('no-background');
+      console.log('Background enabled');
     } else {
-      document.body.classList.add('no-background');
+      container.classList.add('no-background');
+      console.log('Background disabled');
     }
 
-    // visual feedback
-    document.body.style.transition = 'background-color 0.3s';
-    document.body.style.backgroundColor = backgroundEnabled ? '#fff' : '#fafafa';
-
-    keySequence = ''; // reset sequence
+    clickCount = 0;
   }
 });
 

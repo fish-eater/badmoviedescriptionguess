@@ -52,6 +52,8 @@ header {
   height: 28px;
   flex-shrink: 0;
   border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.3s;
 }
 
 .header-title {
@@ -267,6 +269,10 @@ main {
 .container>* {
   position: relative;
   z-index: 1;
+}
+
+.container.no-background::before {
+  display: none;
 }
 
 .story {
