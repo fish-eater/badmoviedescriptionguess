@@ -1,4 +1,8 @@
-const CORS_PROXY = "https://corsproxy.io/?url=";
+const CORS_PROXY = "https://cors.eu.org/";
+// if cors.eu.org is down:
+// https://cors.io/?u=
+// https://corsproxy.io/?url=
+
 const POST_LIMIT = 100; // reddit api max per request
 const SUBREDDIT = "ExplainAFilmPlotBadly";
 
