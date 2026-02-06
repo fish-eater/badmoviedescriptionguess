@@ -1,12 +1,35 @@
-const CORS_PROXY = "https://cors.eu.org/";
+const CORS_PROXY = "https://cors.io/?u=";
 // if cors.eu.org is down:
-// https://cors.io/?u=
+// https://cors.eu.org/  
 // https://corsproxy.io/?url=
 
 const POST_LIMIT = 100; // reddit api max per request
 const SUBREDDIT = "ExplainAFilmPlotBadly";
 
 let posts = [], validatedRiddles = [], lastSort = "", isLoadingPost = false;
+
+// utilities -----------------------------------------------------
+
+async function parseProxyResponse(resp, type = 'json') {
+  const text = await resp.text();
+  let content = text;
+
+  try {
+    const json = JSON.parse(text);
+    if (json.body && (json.status || json.headers)) {
+      content = json.body;
+    } else if (type === 'json') {
+      return json;
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  if (type === 'json') {
+    return typeof content === 'string' ? JSON.parse(content) : content;
+  }
+  return content;
+}
 
 const shuffle = arr => {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -25,7 +48,7 @@ async function getMoviePoster(movieName) {
     const spUrl = `https://www.startpage.com/sp/search?query=${searchQuery}&cat=images&language=english&lui=english`;
     const resp = await fetch(CORS_PROXY + encodeURIComponent(spUrl));
     if (!resp.ok) return null;
-    const html = await resp.text();
+    const html = await parseProxyResponse(resp, 'text');
     return extractStartpageImage(html) || null;
   } catch (err) {
     console.log("Error fetching poster:", err);
@@ -90,7 +113,7 @@ async function getPostList(sort) {
     const resp = await fetch(CORS_PROXY + encodeURIComponent(url));
     if (!resp.ok) break;
 
-    const data = await resp.json();
+    const data = await parseProxyResponse(resp, 'json');
     const children = data.data.children;
     if (!children.length) break;
 
@@ -122,7 +145,7 @@ async function validatePost(post) {
     const commentsResp = await fetch(CORS_PROXY + encodeURIComponent(commentsUrl));
     if (!commentsResp.ok) return null;
 
-    const commentsData = await commentsResp.json();
+    const commentsData = await parseProxyResponse(commentsResp, 'json');
     if (!commentsData[1]?.data?.children) return null;
 
     const comments = commentsData[1].data.children;
