@@ -293,31 +293,49 @@ async function showNextRiddle() {
 window.onload = loadInitialPosts;
 
 // info popup functionality
+// about panel ---------------------------------------------------
+
 const infoBtn = document.getElementById('infoBtn');
-const infoPopup = document.getElementById('infoPopup');
-const closePopup = document.getElementById('closePopup');
+const aboutPanel = document.getElementById('aboutPanel');
+const closePanel = document.getElementById('closePanel');
 
-infoBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  infoPopup.classList.add('show');
-});
-
-closePopup.addEventListener('click', () => {
-  infoPopup.classList.remove('show');
-});
-
-infoPopup.addEventListener('click', (e) => {
-  if (e.target === infoPopup) {
-    infoPopup.classList.remove('show');
+function togglePanel(e) {
+  if (e) e.stopPropagation();
+  if (aboutPanel) {
+    aboutPanel.classList.toggle('closed');
   }
-});
+}
 
-// close popup with Escape key
+if (infoBtn) {
+  infoBtn.addEventListener('click', togglePanel);
+}
+
+if (closePanel) {
+  closePanel.addEventListener('click', togglePanel);
+}
+
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && infoPopup.classList.contains('show')) {
-    infoPopup.classList.remove('show');
+  if (e.key === 'Escape' && aboutPanel && !aboutPanel.classList.contains('closed')) {
+    aboutPanel.classList.add('closed');
   }
 });
+
+// share button --------------------------------------------------
+
+const shareBtn = document.getElementById("shareBtn");
+const copyToast = document.getElementById("copyToast");
+if (shareBtn && copyToast) {
+  shareBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      copyToast.classList.add("show");
+      setTimeout(() => {
+        copyToast.classList.remove("show");
+      }, 2000);
+    }).catch(err => {
+      console.error("Failed to copy: ", err);
+    });
+  });
+}
 
 
 // clicking the favicon 5 times disables the background (easter egg)

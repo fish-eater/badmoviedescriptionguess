@@ -24,13 +24,14 @@ body {
 
 header {
   width: 100%;
-  padding: 0.8em 1.2em;
+  padding: 0.6em;
   background: #191919;
   color: #fff;
   font-size: 1.1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -39,12 +40,16 @@ header {
   gap: 1em;
 }
 
-.header-left {
+.header-left,
+.header-right {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 0.6em;
-  flex: 1;
-  min-width: 0;
+  min-width: fit-content;
+}
+
+.header-right {
+  justify-content: flex-end;
 }
 
 .header-favicon {
@@ -54,6 +59,7 @@ header {
   border-radius: 4px;
   cursor: pointer;
   transition: transform 0.3s;
+  padding-right: 10px;
 }
 
 .header-title {
@@ -63,12 +69,10 @@ header {
 }
 
 .header-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 0.4em;
+  gap: 1.5em;
+  justify-content: center;
 }
 
 .header-link {
@@ -86,13 +90,13 @@ header {
   background: transparent;
   border: 1.5px solid #fff;
   color: #fff;
-  border-radius: 10%;
+  border-radius: 5px;
   font-size: 0.75em;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5;
+  padding: 7px 18px;
   transition: background 0.2s, transform 0.15s;
   font-weight: bold;
   line-height: 1;
@@ -103,104 +107,123 @@ header {
   transform: scale(1.1);
 }
 
-.info-popup {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-}
-
-.info-popup.show {
-  display: flex;
-  animation: fadeIn 0.2s ease-in;
-}
-
-.info-popup-content {
-  background: #fff;
-  padding: 2em;
-  border-radius: 12px;
-  max-width: 450px;
-  width: 90%;
+.share-container {
   position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  animation: slideIn 0.3s ease-out;
+  display: flex;
+  align-items: center;
 }
 
-.info-popup-content h3 {
+.copy-toast {
+  position: absolute;
+  top: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.7em;
+  font-family: sans-serif;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+  z-index: 100;
+}
+
+.copy-toast.show {
+  opacity: 1;
+}
+
+/* Layout */
+.main-layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  margin-top: 1.6em;
+  transition: all 0.3s ease;
+}
+
+.about-panel {
+  width: 300px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  transform: translateX(0);
+  margin-right: 0;
+  height: fit-content;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.about-panel.closed {
+  width: 0;
+  opacity: 0;
+  margin-right: -20px;
+  /* Compensate for grid gap */
+  padding: 0;
+  transform: translateX(-20px);
+  pointer-events: none;
+}
+
+.about-content {
+  padding: 24px;
+  width: 300px;
+  /* Force width to prevent reflow */
+  box-sizing: border-box;
+}
+
+.about-content h3 {
   margin: 0 0 1em;
   color: #191919;
-  font-size: 1.4em;
+  font-size: 1.2em;
 }
 
-.info-popup-content p {
+.about-content p {
   margin: 0.8em 0;
-  line-height: 1.6;
+  line-height: 1.5;
   color: #333;
+  font-size: 0.95em;
 }
 
-.info-popup-content a {
+.about-content a {
   color: #191919;
   text-decoration: underline;
   font-weight: 600;
 }
 
-.info-popup-content a:hover {
-  color: #444;
-}
-
-.info-close {
+.panel-close {
   position: absolute;
-  top: 0.5em;
-  right: 0.5em;
+  top: 10px;
+  right: 10px;
   background: transparent;
   border: none;
-  font-size: 2em;
-  color: #666;
+  font-size: 1.8em;
+  color: #999;
   cursor: pointer;
+  line-height: 1;
   padding: 0;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color 0.2s;
 }
 
-.info-close:hover {
-  color: #191919;
+.panel-close:hover {
+  color: #333;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
 
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 0.8em;
-  flex-shrink: 0;
-}
 
 header .creator {
   font-size: 0.85em;
@@ -240,17 +263,19 @@ main {
 }
 
 .container {
-  padding: 26px 16px 20px 16px;
-  min-width: 320px;
-  max-width: 600px;
+  flex: 1;
+  max-width: 700px;
   width: 100%;
   text-align: center;
   border-radius: 12px;
   box-shadow: 0 2px 12px 3px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: hidden;
-  margin: 1.6em 0;
   background: rgba(255, 255, 255, 0.8);
+  padding: 26px 16px 20px 16px;
+  transition: all 0.3s ease;
+  margin-top: 0;
+  /* remove margin as it's handled by main-layout gap */
 }
 
 .container::before {
@@ -396,6 +421,31 @@ a:hover {
   transform: scale(1.05);
 }
 
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-panel {
+    width: 100%;
+    max-width: 700px;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .about-panel.closed {
+    margin-bottom: -300px;
+    margin-right: 0;
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+
+  .about-content {
+    width: 100%;
+  }
+}
+
 @media (max-width: 800px) {
   main {
     flex-direction: column;
@@ -406,34 +456,12 @@ a:hover {
     gap: 0.5em;
   }
 
-  .header-left {
-    gap: 0.4em;
-  }
-
-  .header-favicon {
-    width: 24px;
-    height: 24px;
-  }
-
-  .header-title {
-    font-size: 0.9em;
-  }
-
+  .header-left,
+  .header-right,
   .header-center {
-    display: none;
-  }
-
-  header .creator {
-    font-size: 0.75em;
-  }
-
-  .donate-btn {
-    font-size: 0.75em;
-    padding: 4px 10px;
-  }
-
-  .movie-poster {
-    max-width: 160px;
+    flex: 1 1 100%;
+    justify-content: center;
+    text-align: center;
   }
 }
 
