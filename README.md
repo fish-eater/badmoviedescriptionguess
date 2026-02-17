@@ -1,8 +1,8 @@
-﻿# movieexplainedbad
+﻿# movie explained badly guessing game
+this project has moved!
 
-## about the game
-- guess a movie based on a bad description of it (from reddit)
+the new repository can be found at: 
+https://git.disroot.org/fisheater/movieexplainedbad
 
-## jarrett warlick
-- tiktok-er who requested this game to be made, along with similar scraping games like 2sentenceexplorer and badmoviedescriptionguess
-- to remove his branding click the icon in the top left 5 times
+the live site is now located at: 
+https://eater.fish/creation/git/movieexplainedbad/
